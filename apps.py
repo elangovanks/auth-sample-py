@@ -57,14 +57,14 @@ def get_app(settings, jwks_provider):
 if __name__ == '__main__':
     settings = read_settings()
     jwks_provider = get_jwks_provider(settings)
-    app = get_app(settings, jwks_provider)
+    apps = get_app(settings, jwks_provider)
 
     tornado.ioloop.IOLoop.current().run_sync(jwks_provider.update)
     tornado.ioloop.IOLoop.current().spawn_callback(jwks_provider.update_loop)
 
-    http_server = tornado.httpserver.HTTPServer(app)
+    http_server = tornado.httpserver.HTTPServer(apps)
     http_server.listen(8080)
 
-    logging.info('Listening on port 8080')
+    logging.info('Listening on port 8000')
 
     tornado.ioloop.IOLoop.current().start()

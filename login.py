@@ -29,8 +29,31 @@ class LoginHandler(tornado.web.RequestHandler):
 
     def get(self):
         logging.info('In Hello world handler')
-        self.write("Hello, world3!")
-        
+        #self.write("Hello, world3!")
+        #next_url = self.request.headers.get('X-Original-URI', '')
+        next_url = 'https://www.google.com'
+        self.write(next_url)
+
+        #nonce = base64.b64encode((os.urandom(50)).decode('ascii'))
+        nonce = '2345'
+
+        state = self._serialize_state({
+            'state_id': uuid.uuid4().hex,
+            'next_url': next_url,
+            'nonce': nonce
+        })
+
+        self.set_secure_cookie(cookies.STATE_COOKIE_NAME, state, expires_days=1, httponly=True)
+
+        authorization_url = TEMPLATE_AUTHZ_URL.format(
+            self.authorization_endpoint,
+            self.client_id,
+            self.redirect_uri,
+            state,
+            urllib.parse.quote(nonce)
+        )
+
+        self.redirect(authorization_url)
 
     def post(self):
         self.clear_cookie(cookies.AUTH_COOKIE_NAME)
