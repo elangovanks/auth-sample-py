@@ -1,6 +1,6 @@
 tornado==6.0.1
 python-jose==3.0.1
-requests==2.21.0
+requests==2.31.0
 pytest_runner>=4.2
 pytest==3.6.1
 pytest-xdist==1.23.2
