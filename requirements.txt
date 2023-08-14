@@ -1,4 +1,4 @@
-tornado==6.0.1
+tornado==6.3.3
 python-jose==3.0.1
 requests==2.21.0
 pytest_runner>=4.2
